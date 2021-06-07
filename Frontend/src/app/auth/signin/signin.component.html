@@ -1,0 +1,30 @@
+      <div style="margin-top:9%;margin-right:19%;margin-left:25%;">
+                <div class="card text-center" > 
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">Connexion</h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="CIN"  [(ngModel)]='cin' name="CIN" type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Mot de passe" [(ngModel)]='passwd' name="Password" type="password" >
+                                    </mat-form-field>
+                                
+                                </div>
+                            </div>
+                            <button mat-raised-button type="submit" (click)="checkLogin()" class="btn btn-info  pull-right"  >Se connecter</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+  
+
+
+           

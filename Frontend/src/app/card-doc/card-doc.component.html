@@ -1,0 +1,29 @@
+<h2 mat-dialog-title><b>{{doc.nom}} {{doc.prenom}}</b></h2>
+<mat-dialog-content class="mat-typography">
+
+    <mat-list>
+
+        <mat-list-item>CIN : <b>{{doc.cin}}</b> </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Intitulé de la these :<b>   {{doc.intituleThese}}</b> </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Année d'inscription :<b>   {{doc.anneeInscriptiondate}}</b> </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Professeur Encadrant :<b> {{prof}}  </b> </mat-list-item>
+        <mat-divider></mat-divider>
+        
+       
+           <mat-list-item>****Liste des recherches :<b></b> </mat-list-item>
+          
+           <mat-list *ngFor="let rec of rech;">
+           <mat-divider></mat-divider>
+            <small>
+               <mat-list-item>-Titre :<b>{{rec.titre}}</b> </mat-list-item>
+           <mat-list-item>-Statut :<b>{{rec.statu}}</b> </mat-list-item>
+           <mat-list-item>-Date de creation :<b>{{rec.dateCreation}}</b> </mat-list-item>
+           <mat-divider></mat-divider>
+       </small>
+       </mat-list>
+       </mat-list>
+
+</mat-dialog-content>

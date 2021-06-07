@@ -1,0 +1,170 @@
+<div class="sidebar" data-color="danger" data-background-color="white" data-image="./assets/img/sidebar-1.jpg" style="padding-right: 20%;">
+    <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"> 
+ 
+     <div class="card card-stats">
+         <div class="card-header card-header-warning card-header-icon" style="text-align: center;">
+            
+             <h3 class="card-title">
+                 Bonjour <br><b>Doctorant</b>
+             </h3>
+         </div>
+ 
+         <div class="card-body" style="text-align: left;"> 
+             <mat-list>
+                <mat-list-item>Nom : <b>{{doc.nom}}</b> </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Prenom: <b>{{doc.prenom}}</b> </mat-list-item>
+             <mat-divider></mat-divider>
+             <mat-list-item>CIN : <b>{{doc.cin}}</b> </mat-list-item>
+             <mat-divider></mat-divider>
+             <mat-list-item>Intitulé de la these :<b>   {{doc.intituleThese}}</b> </mat-list-item>
+             <mat-divider></mat-divider>
+             <mat-list-item>Prfesseur Encadrant : <b>   {{directeurThese.nom}} {{directeurThese.prenom}}</b> </mat-list-item>
+             <mat-list-item>coDirecteur : <b>   {{coDirecteur.nom}} {{coDirecteur.prenom}}</b> </mat-list-item>
+             <mat-list-item>cotutelle : <b> {{cotutelle.nom}} {{cotutelle.prenom}}</b> </mat-list-item>
+             <mat-divider></mat-divider>
+
+           </mat-list></div>
+        
+         <div class="card-footer">
+           
+         </div>
+     </div>
+ 
+ 
+ </div>
+ </div>
+ <app-search ></app-search>
+
+ 
+ <button mat-raised-button  class="btn btn-round btn-success" (click)="logout()"  style="margin-left: 88%;" >
+     <span class="material-icons">
+         logout
+         </span>Se deconnecter
+       </button> 
+
+
+       <div class="main-content" style="margin-left: 20%;text-align: center;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title ">Liste des Recherches
+                                <button mat-raised-button  class="btn btn-round btn-success  " (click)="add_re()" >
+                                    <span class="material-icons">
+                                        add
+                                        </span>
+                                      </button>
+
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Titre
+                                        </th>
+                                        <th>   
+                                               Directeur de la thèse
+
+                                        </th>
+                                        <th>                      
+                                             Statut
+                                        </th>
+                                        <th>
+                                            Date de creation
+                                        </th>
+                                        
+                                    </thead>
+                                    <tbody *ngFor="let rech of recherches; let ind=index" style="text-align: center;">
+                                        <tr>
+                                            <td>
+                                                {{rech.rechercheId}}
+                                            </td>
+                                            <td>
+                                                {{rech.titre}}
+                                            </td>
+                                            <td>
+                                                {{directeurThese.nom}} {{directeurThese.prenom}}
+                                            </td>
+                                            <td   class="text-info">
+                                                {{rech.statu}}
+                                            </td>
+                                            <td class="text-primary">
+                                                {{rech.dateCreation}}
+                                            </td>
+                                            <td>  <button mat-raised-button  class="btn btn-round btn-danger  "  (click)="delete_recherche(rech)">
+                                                <span class="material-icons" >
+                                                    delete
+                                                    </span>
+                                                  </button></td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+      </div>
+
+      <div id="add_rechh" #add_rechh> 
+ 
+
+        <div class="main-content" style="margin-top:5%;margin-right:0%;margin-left:40%;" *ngIf="add_rech">
+            <div class="container-fluid" >
+               <div class="row">
+                   <div class="col-md-8">
+                       <div class="card">
+                           <div class="card-header card-header-danger">
+                               <h4 class="card-title">Ajouter une Recherche</h4>
+                               <p class="card-category">Remplir les champs*</p>
+                           </div>
+                           <div class="card-body">
+                            <form #addFormrec="ngForm" (ngSubmit)="add_recherche(addFormrec)">
+    
+                                <div class="row">  
+                                    <div class="col-md-5">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput ngModel [(ngModel)]="titre" id="titre"name="titre" type="text" placeholder="Titre" required>
+                                          </mat-form-field>
+                                    </div> 
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+
+
+                                        Statut : 
+                                        <mat-button-toggle-group ngModel [(ngModel)]="stat" id="stat" name="stat"  required   aria-label="Font Style">
+                                          <mat-button-toggle value="en cours"  >En cours</mat-button-toggle>
+                                          <mat-button-toggle value="soutenu" >Soutenu</mat-button-toggle>
+                                        </mat-button-toggle-group>
+                                            </div>
+                                  
+
+                                </div>
+                                   
+                                <button mat-raised-button class="btn  pull-right"  (click)="annuler_recherche()">Annuler</button>
+
+                                <button mat-raised-button type="submit" class="btn btn-danger pull-right"  [disabled]="addFormrec.invalid">Ajouter</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                       </div>
+                   </div>
+                 
+               </div>
+           </div>
+         </div>
+    
+    
+             </div>

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{data.titre}}</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-list>
+        <mat-list-item>Professeur : <b>{{prof.nom}} {{prof.prenom}}</b> </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Date de publication : <b>{{data.datePublication}}</b> </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Index : <b>{{data.indexType}}</b> </mat-list-item>
+        <mat-divider></mat-divider>
+         
+
+        <mat-list-item>Telecharger :   <button mat-raised-button (click)="download(data.titre)"> {{data.titre}}.pdf </button> </mat-list-item>
+    </mat-list>
+
+
+</mat-dialog-content>

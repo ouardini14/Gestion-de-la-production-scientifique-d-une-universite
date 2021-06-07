@@ -1,0 +1,456 @@
+
+
+ <div class="row">
+    <div class="col-md-6">
+         <button mat-raised-button  class="btn btn-round btn-success" (click)="logout()"   >
+    <span class="material-icons">
+        logout
+        </span>Se deconnecter
+      </button>
+      
+      <app-search style="margin-left: 60%;"></app-search>
+
+    </div>
+    <div class="col-md-5" >
+        <button mat-raised-button  class="btn btn-round btn-success"  routerLink="addEquipe" style="margin-left: 90%;"  >
+            <span class="material-icons">
+                add
+                </span>Equipe de recheche
+              </button>
+        </div>
+
+   
+     </div>
+
+
+ <mat-tab-group mat-align-tabs="center"  style="text-align: center;">
+    
+    <mat-tab label="Professeur">
+
+        
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Liste des professeurs  <button mat-raised-button  class="btn btn-round btn-success  " routerLink="add" >
+                            <span class="material-icons">
+                                add
+                                </span>
+                              </button></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Nom
+                                    </th>
+                                    <th>
+                                       Email
+                                    </th>
+                                    <th>
+                                        Grade
+                                    </th>
+                                    <th>
+                                        CIN
+                                    </th>
+                                    <th>
+                                        Equipe
+                                    </th>
+                                </thead>
+                                <tbody *ngFor="let prof of professeur; let ind=index">
+                                    <tr>
+                                        <td>
+                                            {{prof.profId}}
+                                        </td>
+                                        <td>
+                                            {{prof.nom}} {{prof.prenom}}
+                                        </td>
+                                        <td>
+                                            {{prof.email}}
+                                        </td>
+                                        <td>
+                                            {{prof.grade}}
+                                        </td>
+                                        <td class="text-primary">
+                                            {{prof.cin}}
+                                        </td>
+                                        <td class="text-primary" >
+                                            {{e[ind]}}
+                                        </td>
+                                        <td >
+                                            <button mat-raised-button  class="btn btn-round btn-success  " (click)="edit_pro(prof)" >
+                                            <span class="material-icons">
+                                                build
+                                                </span>
+                                              </button>
+                                              <button mat-raised-button  class="btn btn-round btn-danger  "  (click)="delete_pro(prof)">
+                                                <span class="material-icons" >
+                                                    delete
+                                                    </span>
+                                                  </button>
+                                        </td>
+                                    </tr>
+                                
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+  </div>
+
+ 
+
+
+  <div id="edit_prof" > 
+ 
+
+    <div class="main-content" style="margin-top:5%;margin-right:0%;margin-left:22%;" *ngIf="edit_profe_show">
+        <div class="container-fluid" >
+           <div class="row">
+               <div class="col-md-8">
+                   <div class="card">
+                       <div class="card-header card-header-danger">
+                           <h4 class="card-title">Modifier un Professeur</h4>
+                           <p class="card-category">Remplir les champs*</p>
+                       </div>
+                       <div class="card-body">
+                        <form  #updateFormprof="ngForm" (ngSubmit)="updateprof(updateFormprof)">
+                            <div class="row">
+                                <div class="col-md-5">
+
+
+
+
+                              <mat-form-field class="example-full-width">
+                                    
+
+                                         <mat-label>Equipe</mat-label>
+                                      <input matInput
+                                             aria-label="Equipe"
+                                             [matAutocomplete]="auto"
+                                             [formControl]="EquipeCtrl"
+                                             ngModel name="equipenom" id="equipenom"
+                                             [(ngModel)]="eqname" [ngModelOptions]="{standalone: true}" >
+
+                                      <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let eq of filteredEquipes | async" [value]="eq.nom">
+                                          <span><b>{{eq.nom}}</b></span> |
+
+                                        </mat-option>
+                                      </mat-autocomplete>
+                                   
+                                     
+
+
+                                    </mat-form-field>
+
+
+
+
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput ngModel name="cinpro" id="cinpro" placeholder="CIN" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                  
+                                        <mat-label>Email</mat-label>
+                                        <input type="email" matInput [formControl]="emailFormControl" ngModel [errorStateMatcher]="matcher" name="emailpro" id="emailpro" placeholder="Ex. pat@example.com">
+                                        <mat-hint>enter an email adress!</mat-hint>
+                                        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                                          Please enter a valid email address
+                                        </mat-error>
+                                        <mat-error *ngIf="emailFormControl.hasError('required')">
+                                          Email is <strong>required</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput ngModel name="prenompro" id="prenompro" placeholder="Prenom" type="text" required>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput ngModel name="nompro" id="nompro" placeholder="Nom" type="text" required>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                         
+                            <div class="row">
+                               
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput ngModel name="gradepro" id="gradepro" placeholder="Grade" type="text" required>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput ngModel name="passwdpro" id="passwdpro" placeholder="Mot de passe" type="password" required >
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups"  style="margin-left: 60%;">
+                                    <button mat-raised-button  class="btn btn-accent  pull-right" (click)="annuler_pro()">Annuler</button>   
+                                <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                    <button mat-raised-button  type="submit" class="btn btn-danger pull-right" >Enregistrer</button>
+
+                                </div>
+                                </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                   </div>
+               </div>
+             
+           </div>
+       </div>
+     </div>
+
+
+         </div>
+<div #edit_prof ></div>
+</mat-tab>
+<mat-tab label="Doctorant">
+
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title ">Liste des doctorants  <button mat-raised-button  class="btn btn-round btn-success  " routerLink="add" >
+                                <span class="material-icons">
+                                    add
+                                    </span>
+                                  </button></h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Nom
+                                        </th>
+                                        <th>
+                                            Intitule de la these
+                                        </th>
+                                        <th>
+                                            Professeur encadrant
+                                        </th>
+                                        <th>
+                                            CIN
+                                        </th>
+                                    </thead>
+                                    <tbody *ngFor="let doc of doctorant;let inde=index">
+                                        <tr>
+                                            <td>
+                                                {{doc.docid}}
+                                            </td>
+                                            <td>
+                                                {{doc.nom}} {{doc.prenom}}
+                                            </td>
+                                            <td>
+                                                {{doc.intituleThese}}
+                                            </td>
+                                            <td>
+                                                {{doc.profee}}
+                                            </td>
+                                            <td class="text-primary">
+                                                {{doc.cin}}
+                                            </td>
+                                            <td >
+                                                <button mat-raised-button  class="btn btn-round btn-success  " (click)="edit_do(doc)"  >
+                                                <span class="material-icons">
+                                                    build
+                                                    </span>
+                                                  </button>
+                                                  <button mat-raised-button  class="btn btn-round btn-danger  "   (click)="delete_do(doc)">
+                                                    <span class="material-icons" >
+                                                        delete
+                                                        </span>
+                                                      </button>
+                                            </td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+      </div>
+     
+      <div id="edit_doc" #edit_doc> 
+ 
+
+        
+        <div class="main-content" style="margin-top:5%;margin-right:0%;margin-left:22%;" *ngIf="edit_docto_show">
+            <div class="container-fluid" >
+               <div class="row">
+                   <div class="col-md-8">
+                       <div class="card">
+                           <div class="card-header card-header-danger">
+                               <h4 class="card-title">Modifier un Doctorant</h4>
+                               <p class="card-category">Remplir les champs*</p>
+                           </div>
+                           <div class="card-body">
+                            <form   #updateFormdoc="ngForm" (ngSubmit)="updatedoc(updateFormdoc)">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                      <mat-form-field class="example-full-width">
+                                          <input matInput name="intituleThesedoc" id="intituleThesedoc" placeholder="intutule de la these" required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                          <input matInput name="cindoc" id="cindoc" placeholder="CIN" required>
+                                        </mat-form-field>
+                                    </div>
+                                   </div>
+                                  
+                                   <div class="row">
+
+                                     <div class="col-md-4">
+                                         
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Directeur de thése</mat-label>
+                                            <input matInput
+                                                   aria-label="Professeur"
+                                                   [matAutocomplete]="auto"
+                                                   [formControl]="DiresCtrl"
+                                                   ngModel name="direcname" id="direcname"
+                                                   [(ngModel)]="direcname" [ngModelOptions]="{standalone: true}" >
+      
+                                            <mat-autocomplete #auto="matAutocomplete">
+                                              <mat-option *ngFor="let pr of filteredProfesseurs | async" [value]="pr.nom">
+                                                <span><b>{{pr.nom}}</b></span> |
+      
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                         
+                                  </mat-form-field>
+                                 </div>
+                                       
+                                        
+
+                                  <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>coDirecteur</mat-label>
+                                        <input matInput
+                                               aria-label="Professeur"
+                                               [matAutocomplete]="autooo"
+                                               [formControl]="CoDirecCtrl"
+                                               ngModel name="codirecname" id="codirecname"
+                                               [(ngModel)]="codirecname" [ngModelOptions]="{standalone: true}" >
+  
+                                        <mat-autocomplete #autooo="matAutocomplete">
+                                          <mat-option *ngFor="let co of filteredCoDirec | async" [value]="co.nom">
+                                            <span><b>{{co.nom}}</b></span> |
+  
+                                          </mat-option>
+                                        </mat-autocomplete>
+                                     
+                              </mat-form-field>
+                               </div>
+                                 
+
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>cotutelle</mat-label>
+                                        <input matInput
+                                               aria-label="Professeur"
+                                               [matAutocomplete]="autoo"
+                                               [formControl]="CotuCtrl"
+                                               ngModel name="cotuname" id="cotuname"
+                                               [(ngModel)]="cotuname" [ngModelOptions]="{standalone: true}" >
+  
+                                        <mat-autocomplete #autoo="matAutocomplete">
+                                          <mat-option *ngFor="let cotu of filteredCotu | async" [value]="cotu.nom">
+                                            <span><b>{{cotu.nom}}</b></span> |
+  
+                                          </mat-option>
+                                        </mat-autocomplete>
+                                     
+                              </mat-form-field>
+                             </div>
+                               
+
+                                       
+                                     
+                                     
+                                     </div>
+                                   
+                                
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                      <mat-form-field class="example-full-width">
+                                        <input matInput name="prenomdoc" id="prenomdoc" placeholder="Prenom" type="text" required>
+                                      </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <mat-form-field class="example-full-width">
+                                        <input matInput name="nomdoc" id="nomdoc" placeholder="Nom" type="text" required>
+                                      </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                   
+                                    <div class="col-md-4">
+                                      <mat-form-field class="example-full-width">
+                                        <input matInput name="passwddoc" id="passwddoc" placeholder="Mot de passe" type="password" required >
+                                      </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups"  style="margin-left: 60%;">
+                                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                                        <button mat-raised-button  class="btn btn-accent  pull-right" (click)="annuler_do()">Annuler</button>   
+                                    </div>
+                                    <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                        <button mat-raised-button type="submit" class="btn btn-danger pull-right" >Enregistrer</button>
+    
+                                    </div>
+                                    </div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                       </div>
+                   </div>
+                 
+               </div>
+           </div>
+         </div>
+  
+    
+             </div>
+
+</mat-tab>
+</mat-tab-group>
+
+
+
+      

@@ -1,0 +1,64 @@
+   
+   <form  style="margin-left: 40%;">  <div class="row" >
+<div class="col-md-12" > 
+     <mat-label>Rechercher par : </mat-label>
+        <mat-button-toggle-group  (click)="recherchePar(searchby)"  [(ngModel)]="searchby" id="searchby" name="searchby"     aria-label="Font Style">
+            <mat-button-toggle value="Professeur"  >Professeur</mat-button-toggle>
+            <mat-button-toggle value="Doctorant" >Doctorant</mat-button-toggle>
+            <mat-button-toggle value="Publication" >Publication</mat-button-toggle>
+            <mat-button-toggle value="DatePublication" >Date</mat-button-toggle>
+
+          </mat-button-toggle-group></div>
+
+        </div>
+          <div class="row"   >
+            <div class="col-md-12"> 
+            <mat-form-field >
+                 <mat-label>Rechecher...</mat-label>
+    <input matInput
+    aria-label="Rechecher"
+    [matAutocomplete]="profes"
+    [formControl]="RechercherCtrl"
+    ngModel name="rechechernom" id="rechechernom"
+    [(ngModel)]="rechechernom" [ngModelOptions]="{standalone: true}" >
+
+
+    <mat-autocomplete #profes="matAutocomplete" id="profes">
+                <div id="p" *ngIf="s=='profes'">
+            <mat-option *ngFor="let prof of filteredProfesseurs| async" [value]="prof.nom" (click)="openDialogProf(prof)">
+         <span><b>{{prof.nom}}  {{prof.prenom}}</b></span>
+        
+        </mat-option></div>
+  <div id="d" *ngIf="s=='doct'">
+    <mat-option *ngFor="let doc of filteredDoctorants| async" [value]="doc.nom" (click)=" openDialogDoc(doc)">
+         <span><b>{{doc.nom}} {{doc.prenom}}</b></span>
+        
+        </mat-option></div>  
+
+        
+        <div id="publii" *ngIf="s=='publ'">
+          <mat-option *ngFor="let pub of filteredPublications | async" [value]="pub.titre" (click)=" openDialogPub(pub)">
+          <span><b>{{pub.titre}}</b></span>
+         </mat-option></div>  
+
+         <div id="date" *ngIf="s=='date'">  <mat-option *ngFor="let datpub of filteredDatePublications | async" [value]="datpub.datePublication" (click)=" openDialogPub(datpub)" >
+          <span><b>{{datpub.titre}}</b></span> |{{datpub.datePublication}}
+         </mat-option></div>  
+
+        </mat-autocomplete>
+        
+
+
+
+</mat-form-field>
+
+   </div>     
+ </div>   
+</form>
+ 
+    
+
+
+
+
+

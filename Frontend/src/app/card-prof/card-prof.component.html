@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>{{data.nom}} {{data.prenom}}</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-list>
+        <mat-list-item>CIN : <b>{{data.cin}}</b> </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Equipe :<b>{{equipe.nom}}</b> </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Grade :<b>{{data.grade}}</b> </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>les doctorants encadrés : </mat-list-item> 
+         <div *ngFor="let d of allDocs; let ind=index" style="text-align: center;margin-right: 20%;"><b >-{{d}}</b> <br></div>
+         <mat-divider></mat-divider>
+         <mat-list-item>Liste des puclications: </mat-list-item>
+         <div *ngFor="let pub of publications; let ind=index" style="text-align: center;margin-right: 20%;">
+           
+        <mat-list-item>Titre :<b>{{pub.titre}}</b> </mat-list-item> 
+        <mat-list-item>Date de publication  :<b>{{pub.datePublication}}</b> </mat-list-item> 
+        <button mat-raised-button (click)="download(pub.article)"> {{pub.article}}.pdf </button>  <br>
+        <mat-divider></mat-divider></div>
+        
+      </mat-list>
+
+
+
+</mat-dialog-content>
+
+

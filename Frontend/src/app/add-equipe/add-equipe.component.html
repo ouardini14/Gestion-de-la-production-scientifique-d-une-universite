@@ -1,0 +1,133 @@
+
+<button mat-raised-button  class="btn btn-round btn-info  " routerLink=".."  >
+    <span class="material-icons">
+      keyboard_return
+      </span>
+      
+      Retour
+      </button>
+        
+      <div class="main-content" style="margin-top:5%;margin-right:0%;margin-left:22%;">
+        <div class="container-fluid" >
+           <div class="row">
+               <div class="col-md-8">
+                   <div class="card">
+                       <div class="card-header card-header-danger">
+                           <h4 class="card-title">Ajouter une Equipe</h4>
+                           <p class="card-category">Remplir les champs*</p>
+                       </div>
+                       <div class="card-body">
+                           <form >
+                               <div class="row">
+                                   <div class="col-md-5">
+                                     <mat-form-field class="example-full-width">
+                                         <input matInput placeholder="Nom d'equipe" [(ngModel)]="nomEquipe" [ngModelOptions]="{standalone: true}"required>
+                                       </mat-form-field>
+                                   </div>
+                                 
+                               </div>
+                               <div class="row">
+                                   <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-label>Labo</mat-label>
+                                    <mat-select [(ngModel)]="lab" [ngModelOptions]="{standalone: true}">
+                                        <mat-option value="oui">OUI</mat-option>
+                                        <mat-option value="non">NON</mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                   </div>
+                                 
+                               </div>
+
+                              <div *ngIf="lab=='oui'" >  <mat-tab-group mat-align-tabs="center"  style="text-align: center;">
+                                <mat-tab label="Creer un labo" >
+
+
+                               
+                                   <div class="row" style="margin-right: 10%;">
+                                   <div class="col-md-5">
+                                     <mat-form-field class="example-full-width">
+                                       <input matInput placeholder="Nom de labo" type="text" [(ngModel)]="labonom" [ngModelOptions]="{standalone: true}" required>
+                                     </mat-form-field>
+                                   </div>
+                                   <div class="col-md-5">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="CIN du responsable" type="text" [(ngModel)]="respocin" [ngModelOptions]="{standalone: true}" required>
+                                    </mat-form-field>
+                                  </div>
+                               </div>
+                               <div class="row" style="margin-right: 10%;">
+                                   <div class="col-md-4">
+                                     <mat-form-field class="example-full-width">
+                                       <input matInput placeholder="Etablissement" [(ngModel)]="etabonom" [ngModelOptions]="{standalone: true}" type="text">
+                                     </mat-form-field>
+                                   </div>
+                                   <div class="col-md-4">
+                                     <mat-form-field class="example-full-width">
+                                        <mat-label>Universite</mat-label>
+                                        <mat-select  [(ngModel)]="univ" [ngModelOptions]="{standalone: true}">
+                                            <mat-option *ngFor="let un of universite" value="{{un}}">{{un}}</mat-option>
+                                          </mat-select>
+                                     </mat-form-field>
+                                   </div>
+                               </div>
+                               <br>
+                               <button mat-raised-button type="submit" class="btn btn-danger pull-right"  (click)="addEquipe(nomEquipe,labonom,etabonom,univ,respocin,lab)">Ajouter</button>
+
+
+                                </mat-tab>
+                                <mat-tab label="Un labo existant ">
+
+
+
+                                  <form class="example-form"> 
+                                     <div class="row" style="margin-right: 10%;">  
+                                        <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                    
+
+                                         <mat-label>Labo</mat-label>
+                                      <input matInput
+                                             aria-label="Labo"
+                                             [matAutocomplete]="auto"
+                                             [formControl]="LaboCtrl"
+                                            
+                                             [(ngModel)]="labname" [ngModelOptions]="{standalone: true}" >
+
+                                      <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let labo of filteredStates | async" [value]="labo.nom">
+                                          <span><b>{{labo.nom}}</b></span> |
+
+                                          <small> Universite: {{labo.univ}} // Etablissement: {{labo.etablissement}} </small>
+                                        </mat-option>
+                                      </mat-autocomplete>
+                                   
+                                     
+
+
+                                    </mat-form-field> </div>
+                                    </div>
+                                  </form>
+                                  
+                                          <button  mat-raised-button type="submit" class="btn btn-danger pull-right"  (click)="addEquipe(nomEquipe,labonom,etabonom,univ,respocin,'non_exist',labname)">Ajouter</button>
+
+                                </mat-tab>
+                              </mat-tab-group>
+                              </div>
+                              <button *ngIf="lab=='non'" mat-raised-button type="submit" class="btn btn-danger pull-right"  (click)="addEquipe(nomEquipe,labonom,etabonom,univ,respocin,lab)">Ajouter</button>
+
+                               <div class="clearfix"></div>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+             
+           </div>
+       </div>
+     </div>
+      
+    
+  
+        
+     
+  

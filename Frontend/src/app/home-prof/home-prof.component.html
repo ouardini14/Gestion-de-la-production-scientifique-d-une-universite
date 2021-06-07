@@ -1,0 +1,171 @@
+<div class="sidebar" data-color="danger" data-background-color="white" data-image="./assets/img/sidebar-1.jpg" style="padding-right: 20%;">
+    <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"> 
+ 
+     <div class="card card-stats">
+         <div class="card-header card-header-warning card-header-icon" style="text-align: center;">
+            
+             <h3 class="card-title">
+                 Bonjour <br><b>Professeur</b>
+             </h3>
+         </div>
+ 
+         <div class="card-body" style="text-align: left;"> 
+             <mat-list>
+                <mat-list-item>Nom : <b>{{prof.nom}}</b> </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Prenom: <b>{{prof.prenom}}</b> </mat-list-item>
+             <mat-divider></mat-divider>
+             <mat-list-item>CIN : <b>{{prof.cin}}</b> </mat-list-item>
+             <mat-divider></mat-divider>
+             <mat-list-item>Equipe :<b>{{equipe.nom}}</b> </mat-list-item>
+             <mat-divider></mat-divider>
+             <mat-list-item>Grade :<b>{{prof.grade}}</b> </mat-list-item>
+             <mat-divider></mat-divider>
+             <mat-list-item>les doctorants encadrés : </mat-list-item> 
+              <div *ngFor="let d of allDocs; let ind=index" style="text-align: center;margin-right: 20%;"><b >{{d}}</b> <br></div>
+           </mat-list></div>
+        
+         <div class="card-footer">  
+           
+         </div>
+     </div>
+ 
+ 
+ </div>
+ </div>
+ <app-search ></app-search>
+
+ <button mat-raised-button  class="btn btn-round btn-success" (click)="logout()"  style="margin-left: 88%;" >
+     <span class="material-icons">
+         logout
+         </span>Se deconnecter
+       </button> 
+ 
+ <div class="main-content" style="margin-left: 20%;">
+     <div class="container-fluid">
+         <div class="row">
+             <div class="col-md-12">
+                 <div class="card">
+                     <div class="card-header card-header-danger">
+                         <h4 class="card-title " style="text-align: center;">Liste des Publications <button mat-raised-button  class="btn btn-round btn-success  " (click)="add_pu()" >
+                            <span class="material-icons">
+                                add
+                                </span>
+                              </button></h4>  
+                     </div>
+                     <div class="card-body">
+                         <div class="table-responsive">
+                             <table class="table">
+                                 <thead class=" text-primary"  style="text-align: center;">
+                                     <th>
+                                         ID
+                                     </th>
+                                     <th>
+                                         Titre
+                                     </th>
+                                     <th>
+                                        Index
+                                     </th>
+                                     <th>
+                                         Date de Publication
+                                     </th>
+                                     <th>
+                                        Lien de téléchargement
+                                    </th>
+                                 </thead>
+                                 <tbody *ngFor="let pub of publications; let ind=index" style="text-align: center;">
+                                     <tr>
+                                         <td>
+                                             {{pub.publicationId}}
+                                         </td>
+                                         <td>
+                                            {{pub.titre}}
+                                        </td>
+                                         <td>
+                                             {{pub.indexType}}
+                                         </td>
+                                         <td>
+                                            {{pub.datePublication}}
+                                        </td>
+                                         <td>
+                                             <button mat-raised-button (click)="download(pub.article)"> {{pub.article}}.pdf </button>   
+                                           
+                                            </td>
+                                            <td>  <button mat-raised-button  class="btn btn-round btn-danger  "  (click)="delete_pub(pub)">
+                                                <span class="material-icons" >
+                                                    delete
+                                                    </span>
+                                                  </button></td>
+                                     </tr>
+                                 
+                                 </tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+          
+         </div>
+     </div>
+   </div>
+
+
+   <div id="add_pubb" #add_pubb> 
+ 
+
+    <div class="main-content" style="margin-top:5%;margin-right:0%;margin-left:40%;" *ngIf="add_publ">
+        <div class="container-fluid" >
+           <div class="row">
+               <div class="col-md-8">
+                   <div class="card">
+                       <div class="card-header card-header-danger">
+                           <h4 class="card-title">Ajouter une Publication</h4>
+                           <p class="card-category">Remplir les champs*</p>
+                       </div>
+                       <div class="card-body">
+                        <form #addFormpub="ngForm" (ngSubmit)="add_pub(addFormpub)">
+
+                            <div class="row">  
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput ngModel [(ngModel)]="titre" id="titre"name="titre" type="text" placeholder="Titre" required>
+                                      </mat-form-field>
+                                </div> 
+                            </div>
+
+                                <div class="row">
+                                     <div class="col-md-5">
+                                     <mat-form-field class="example-full-width">
+                                    <mat-label>Index</mat-label>
+                                    <mat-select ngModel [(ngModel)]="index" id="index" name="index" required>
+                                        <mat-option  value=true>OUI</mat-option>
+                                        <mat-option  value=false>NON</mat-option>
+                                      </mat-select>
+                                 </mat-form-field>
+                                </div>
+                            </div>
+                               
+                                <div class="row">
+                                     <div class="col-md-6">
+                                        <mat-label>La Publication :  </mat-label>
+                                        <div class="row"> 
+                                            <input ngModel type="file" (change)="upload($event)" placeholder="Choisir un fichier" accept=".pdf" id="contenu" name="contenu" required >
+                                           </div>
+                                </div>
+                            </div>
+                               
+                            <button mat-raised-button class="btn  pull-right"  (click)="annuler_publication()">Annuler</button>
+
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right"  [disabled]="addFormpub.invalid">Ajouter</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                   </div>
+               </div>
+             
+           </div>
+       </div>
+     </div>
+
+
+         </div>
