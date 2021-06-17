@@ -1,3 +1,4 @@
+full video : https://youtu.be/XeXPPlGsKFI
 # :star:<strong style="color: blue; opacity: 0.80">**Gestion de la production scientifique de l’université**</strong> :star: 
 # Introduction
 Une plateforme pour la gestion des doctorants et des professeurs inscrit , ainsi leurs publications et recherches
